@@ -15,7 +15,7 @@ namespace GloboClima.API.Controllers
            _weatherForecastService = weatherForecastService;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string city)
         {
             try
