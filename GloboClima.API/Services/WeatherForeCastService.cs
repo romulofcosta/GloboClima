@@ -38,12 +38,9 @@ namespace GloboClima.API.Services
                 var res = await _externalWebApiService.GetExternalData(endpoint);
 
                 return res;
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
 

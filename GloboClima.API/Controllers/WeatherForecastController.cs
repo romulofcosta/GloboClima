@@ -1,6 +1,5 @@
 using GloboClima.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 
 namespace GloboClima.API.Controllers
 {
@@ -12,7 +11,7 @@ namespace GloboClima.API.Controllers
 
         public WeatherForecastController(IWeatherForecastService weatherForecastService)
         {
-           _weatherForecastService = weatherForecastService;
+            _weatherForecastService = weatherForecastService;
         }
 
         [HttpGet]
@@ -28,8 +27,6 @@ namespace GloboClima.API.Controllers
             {
                 return BadRequest();
             }
-
-            return Ok();
         }
     }
 }

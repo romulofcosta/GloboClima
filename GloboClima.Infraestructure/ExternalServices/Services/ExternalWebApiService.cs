@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,9 @@ namespace GloboClima.Infrastructure.ExternalServices.Services
 
             var client = new HttpClient();
             var res = await client.GetAsync(endpoint);
+
+            if (res.StatusCode != HttpStatusCode.OK)
+                throw new Exception();
 
             return await res.Content.ReadAsStringAsync();
         }

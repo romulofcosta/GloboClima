@@ -1,8 +1,44 @@
-﻿@{
+﻿@model GloboClima.WebApp.Models.ForecastModel;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@*     <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
+    <form method="Get">
+        <label> Cidade </label>
+        <input type="text" name="city"/>
+        <input type="submit" value="buscar" />
+    </form>
+
+    @{
+       if (@Model != null)
+       {
+
+            <table>
+                <tr>
+                    <th>Cidade</th>
+                    <th>País</th>
+                    <th>Tempo</th>
+                    <th>Máxima</th>
+                    <th>Mínima</th>
+                </tr>
+                <tr>
+                    <td>@Model.Name</td>
+                    <td>@Model.Sys.Country</td>
+                    <td>@Model.Weather[0].Main </td>
+                    <td>@Model.Main.TempMax</td>
+                    <td>@Model.Main.TempMin</td>
+
+                </tr>
+
+            </table>
+       }
+        else
+        {
+            <h3>Nenhuma cidade pesquisada no momento!</h3>
+        }
+    }
 </div>

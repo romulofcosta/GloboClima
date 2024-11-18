@@ -1,6 +1,7 @@
 using GloboClima.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace GloboClima.WebApp.Controllers
 {
@@ -13,9 +14,25 @@ namespace GloboClima.WebApp.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string city)
         {
-            return View();
+
+            ForecastModel? jsonForecast = null;
+
+            if (city != null)
+            {
+                var endpoint = $"https://localhost:44376/WeatherForecast/?City={city}";
+
+                var res = await new HttpClient().GetAsync(endpoint);
+
+                if (res.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = await res.Content.ReadAsStringAsync();
+                    jsonForecast = JsonSerializer.Deserialize<ForecastModel>(content);
+                }
+            }
+
+             return View(jsonForecast);
         }
 
         public IActionResult Privacy()
