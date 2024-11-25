@@ -21,11 +21,14 @@ namespace GloboClima.API.Controllers
             {
                 var res = await _weatherForecastService.GetCityWeatherForecast(city);
 
+                if (res.Contains("\"cod\":\"404\""))
+                    return NotFound(res);
+
                 return Ok(res);
             }
             catch (Exception)
             {
-                return BadRequest();
+                throw;
             }
         }
     }

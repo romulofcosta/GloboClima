@@ -1,15 +1,15 @@
 ﻿using GloboClima.API.Services.Interfaces;
 using GloboClima.Core.Services;
-using System.Net;
-using System.Text;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GloboClima.API.Services
 {
     public class WeatherForeCastService : IWeatherForecastService
     {
-        private readonly string _sectionWebApi = "OpenWeatherMap";
-        private readonly string _endpoint = "EndpointApi";
-        private readonly string _apiKey = "Apikey";
+        private const string SECTION_WEB_API = "OpenWeatherMap";
+        private const string ENDPOINT = "EndpointApi";
+        private const string API_KEY = "Apikey";
 
         private readonly IConfiguration _configuration;
         private readonly IExternalWebApiService _externalWebApiService;
@@ -27,8 +27,8 @@ namespace GloboClima.API.Services
                 if (cityName is null) 
                     throw new Exception("Cidade não informada!");
 
-                var endpoint = _configuration.GetSection(_sectionWebApi).GetValue<string>(_endpoint);
-                var apiKey = _configuration.GetSection(_sectionWebApi).GetValue<string>(_apiKey);
+                var endpoint = _configuration.GetSection(SECTION_WEB_API).GetValue<string>(ENDPOINT);
+                var apiKey = _configuration.GetSection(SECTION_WEB_API).GetValue<string>(API_KEY);
 
                 if (endpoint is null || apiKey is null)
                     throw new Exception("Configurações não informada!");
@@ -37,7 +37,7 @@ namespace GloboClima.API.Services
 
                 var res = await _externalWebApiService.GetExternalData(endpoint);
 
-                return res;
+                return res.Content.ReadAsStringAsync().Result;
             }
             catch (Exception)
             {

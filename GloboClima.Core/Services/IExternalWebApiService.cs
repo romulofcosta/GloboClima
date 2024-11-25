@@ -8,6 +8,6 @@ namespace GloboClima.Core.Services
 {
     public interface IExternalWebApiService
     {
-        public Task<string> GetExternalData(string endpoint);
+        public Task<HttpResponseMessage> GetExternalData(string endpoint);
     }
 }
